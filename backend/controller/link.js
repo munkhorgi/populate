@@ -17,7 +17,7 @@ export const getAlllinks = async (req, res) => {
 
 export const createlink = async (req, res) => {
   try {
-    const shortlink = nanoid(4); //=> "V1StGXR8_Z5jdHi6B-myT"
+    const shortlink = nanoid(4);
     const link = await Link.create({ ...req.body, Shortlink: shortlink });
     res.status(200).send({
       success: true,
@@ -64,3 +64,18 @@ export const findlink = async (req, res) => {
     });
   }
 };
+export const adminDelete = async (req , res , next) => {
+  try {
+    const { role } = req.params
+    const user = await Link.findByIdAndRemove({ _id: id });
+    res.status(200).send({
+      success: true,
+      data: admin,
+    });
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      data: error.message,
+    });
+  }
+}

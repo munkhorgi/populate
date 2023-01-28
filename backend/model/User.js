@@ -14,9 +14,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: [false],
   },
+  role: {
+    type: String,
+    default: "normal",
+    enum: ["normal", "admin", "superAdmin", "family"],
+    require: [false , "please specify user  role "]
+  }
 } ,{ toJSON : {virtuals:true} , toObject : {virtuals: true}}
 );
-
 UserSchema.virtual("links", {
   ref: "Link",
   localField: "_id",
