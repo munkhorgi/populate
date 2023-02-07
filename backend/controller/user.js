@@ -1,6 +1,7 @@
 import User from "../model/User.js";
 import bcrypt from "bcrypt"
 import jwt from "jsonwebtoken";
+
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find({}).populate("links");

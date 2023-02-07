@@ -1,9 +1,9 @@
-import Link from "../model/link.js";
+import Link from "../model/Link.js";
 import { nanoid } from "nanoid";
 
 export const getAlllinks = async (req, res) => {
   try {
-    const link = await Link.find({});
+    const link = await Link.find({}).limit(2).skip(3);
     res.status(200).send({
       data: link,
     });
@@ -19,22 +19,6 @@ export const createlink = async (req, res) => {
   try {
     const shortlink = nanoid(4);
     const link = await Link.create({ ...req.body, Shortlink: shortlink });
-    res.status(200).send({
-      success: true,
-      data: link,
-    });
-  } catch (error) {
-    res.status(400).send({
-      success: false,
-      data: error.message,
-    });
-  }
-};
-
-export const deletelink = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const link = await Link.findByIdAndRemove({ _id: id });
     res.status(200).send({
       success: true,
       data: link,
@@ -64,18 +48,17 @@ export const findlink = async (req, res) => {
     });
   }
 };
-export const adminDelete = async (req , res , next) => {
+
+export const deleteLink = async (req, res) => {
   try {
-    const { role } = req.params
-    const user = await Link.findByIdAndRemove({ _id: id });
+    const id = req.params.id;
+    const link = await Link.findByIdAndRemove({ _id: id });
     res.status(200).send({
-      success: true,
-      data: admin,
+      data: link,
     });
   } catch (error) {
     res.status(400).send({
-      success: false,
       data: error.message,
     });
   }
-}
+};
